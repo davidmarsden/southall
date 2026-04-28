@@ -5398,12 +5398,46 @@ H/t <!-- raw HTML omitted -->@EalingIndys<!-- raw HTML omitted --> <!-- raw HTML
     
     <script>
 window.addEventListener('load', function() {
+
+  console.log('footer v4');
+
+  
   setTimeout(function() {
-    var el = document.querySelector('#content .archive_categories');
-    var el2 = document.querySelector('#content .archive_years');
-    if (el) el.remove();
-    if (el2) el2.remove();
-  }, 1000);
+    document.querySelectorAll('.card').forEach(card => {
+      const title = card.querySelector('.card-title');
+      const link = Array.from(card.querySelectorAll('a[href]'))
+        .find(a => /southallstories\.uk\/\d{4}\//.test(a.href));
+      if (title && link && !title.querySelector('a')) {
+        const a = document.createElement('a');
+        a.href = link.href;
+        a.innerHTML = title.innerHTML;
+        a.style.color = 'inherit';
+        a.style.textDecoration = 'none';
+        title.innerHTML = '';
+        title.appendChild(a);
+      }
+    });
+  }, 500);
+
+  
+  var meta = document.getElementById('meta');
+  if (meta) {
+    meta.style.display = 'none';
+    var btn = document.createElement('button');
+    btn.innerHTML = '☰ Categories';
+    btn.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;background:#c99a0a;color:#f5f0e8;border:none;padding:0.5rem 1rem;font-size:0.85rem;cursor:pointer;font-family:inherit;';
+    btn.addEventListener('click', function() {
+      if (meta.style.display === 'none') {
+        meta.style.display = 'block';
+        btn.innerHTML = '✕ Categories';
+      } else {
+        meta.style.display = 'none';
+        btn.innerHTML = '☰ Categories';
+      }
+    });
+    document.body.appendChild(btn);
+  }
+
 });
 </script>
 
